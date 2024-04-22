@@ -2,13 +2,12 @@ import nltk
 import random
 
 actions = {
-    "General Actions": ["open", "close", "play", "pause", "stop", "search", "call", "send", "compose", "volume up", "volume down"],
+    "General Actions": ["play", "pause", "stop", "call", "send", "compose", "volume up", "volume down"],
     "Task Management": ["set", "add", "create", "edit", "delete", "remind", "schedule", "snooze"],
     "Information Retrieval": ["what", "when", "why", "where", "how"],  
     "Confirmation": ["yes", "no", "maybe"],
     "Feedback": ["thanks", "cancel", "repeat"]
 }
-
 
 # Define a CFG for simple commands
 grammar = nltk.CFG.fromstring("""
@@ -78,7 +77,7 @@ for sentence in sentences:
             for tree in parser.parse(tokens):
                 response = generate_response(tree)
                 print("Bot:", response)
-                break  # Only consider the first parse tree
+                break  # Only consider the first parse treez
         else:
             print("Bot:", "I do not understand that.")
     except ValueError as e:
