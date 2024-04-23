@@ -4,22 +4,26 @@ import nltk
 # Define the CFG rules
 cfg_rules = """
     S -> OPEN_PROGRAM | INQUIRY     
-    OPEN_PROGRAM -> MODAL PRONOUNS VERB NOUN_PHRASE | VERB NOUN | VERB ADJECTIVE NOUN | VERB NOUN_PHRASE | VERB NOUN_PHRASE PREP_PHRASE | VERB NOUN_PHRASE PREP_PHRASE    
+    OPEN_PROGRAM -> MODAL PRONOUNS VERB PROGRAM_NOUN | VERB PROGRAM | VERB PROGRAM_NOUN | VERB PROGRAM_NOUN | VERB PROGRAM_NOUN PREP_PHRASE | VERB PROGRAM_NOUN PREP_PHRASE    
     INQUIRY -> QUESTION VERB DETERMINERS NOUN PUNCTUATIONS | QUESTION VERB NOUN PUNCTUATIONS | QUESTION NOUN PUNCTUATIONS | QUESTION VERB DETERMINERS NOUN | QUESTION VERB NOUN | QUESTION NOUN | QUESTION VERB DETERMINERS NOUN ADJECTIVE PUNCTUATIONS | QUESTION VERB NOUN ADJECTIVE PUNCTUATIONS | QUESTION NOUN ADJECTIVE PUNCTUATIONS | QUESTION VERB DETERMINERS NOUN ADJECTIVE | QUESTION VERB NOUN ADJECTIVE | QUESTION NOUN ADJECTIVE 
     
-    
+    PROGRAM_NOUN -> DETERMINERS PROGRAM | DETERMINERS ADJECTIVE PROGRAM | ADJECTIVE PROGRAM
     NOUN_PHRASE -> DETERMINERS NOUN | DETERMINERS ADJECTIVE NOUN | ADJECTIVE NOUN
     PREP_PHRASE -> PREPOSITIONS NOUN_PHRASE
 
-    PUNCTUATIONS -> "?"
+    
     QUESTION -> "what" | "when" | "why" | "where" | "how"
+    PROGRAM -> "microsoft" | "word" | "spotify" | "chrome" | "firefox" | "skype" | "zoom" | "excel" | "powerpoint" | "outlook" | "photoshop" | "illustrator" | "indesign" | "premiere" | "aftereffects" | "audition" | "acrobat" | "wordpad" | "notepad" | "visualstudio" | "eclipse" | "androidstudio" | "unity" | "unrealengine" | "blender" | "autocad" | "solidworks"  
+    
     MODAL -> "can"
     PRONOUNS -> "you"   
-    NOUN -> "computer" | "microsoft" | "word" | "spotify" | "chrome" | "firefox" | "skype" | "zoom" | "excel" | "powerpoint" | "outlook" | "photoshop" | "illustrator" | "indesign" | "premiere" | "aftereffects" | "audition" | "acrobat" | "wordpad" | "notepad" | "visualstudio" | "eclipse" | "androidstudio" | "unity" | "unrealengine" | "blender" | "autocad" | "solidworks"  
+    NOUN -> "microsoft" | "word" | "spotify" | "chrome" | "firefox" | "skype" | "zoom" | "excel" | "powerpoint" | "outlook" | "photoshop" | "illustrator" | "indesign" | "premiere" | "aftereffects" | "audition" | "acrobat" | "wordpad" | "notepad" | "visualstudio" | "eclipse" | "androidstudio" | "unity" | "unrealengine" | "blender" | "autocad" | "solidworks"  
+    
     ADJECTIVE -> "microsoft" | "important"
     VERB  ->  "open" | "close" | "is" | "search"
     DETERMINERS -> "the"        
     PREPOSITIONS -> "in"
+    PUNCTUATIONS -> "?"
 """
 
 # Create CFG parser
