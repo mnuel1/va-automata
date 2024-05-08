@@ -1,19 +1,15 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { MainScreen } from './screens/mainScreen'
+import  Home  from './screens/Home'
+import Sidebar from './components/sidebar'
 
 function App() {
 
   return (
     <>
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<MainScreen />}>
-                {/* <Route index element={<Navigate replace to={"home"} />} />
-                <Route path="home" element={<Home />} /> */}
-                </Route>
-            </Routes>
-        </BrowserRouter>
-          
+        <div className='flex min-h-screen bg-[#121212]'>
+            <Sidebar/>
+            <Home/>
+        </div>
+        
     </>
   )
 }
