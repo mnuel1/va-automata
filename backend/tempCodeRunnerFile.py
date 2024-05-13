@@ -1,4 +1,3 @@
-from windows_tools.installed_software import get_installed_software
-
-for software in get_installed_software():
-    print(software['name'], software['version'], software['publisher'])
+for software in software_list:
+        file.write('%s || %s\n' % (software['name'], software.get('install_location', 'No install location')))
+    file.write('Number of installed apps: %s' % len(software_list))
