@@ -1,6 +1,6 @@
 import nltk
 from flask import Flask, request, jsonify
-
+import webbrowser
 
 app = Flask(__name__)
 
@@ -20,7 +20,7 @@ class TalkieChum:
         PRONOUNS -> "you"   
                 
         ADJECTIVE -> "microsoft" | "important"
-        VERB  ->  "open" | "close" | "is" | "search"
+        VERB  ->  "open" | "is" | "search"
         DETERMINERS -> "the"
         PREPOSITIONS -> "in"
         PUNCTUATIONS -> "?"
@@ -48,8 +48,9 @@ class TalkieChum:
 
         # Parse prompts
         for prompt in prompts:
-            tokens = nltk.word_tokenize(prompt.lower())    
-            if not (self.isQuestion(tokens)):
+            tokens = nltk.word_tokenize(prompt.lower())
+            
+            if not self.isQuestion(tokens):  # Removed parentheses around self.isQuestion
                 try:
                     trees = list(parser.parse(tokens))        
                     if not trees:
@@ -59,8 +60,11 @@ class TalkieChum:
                             print(tree)
                 except ValueError as e:
                     print(f"I am sorry, I don't understand your task: {prompt}. Error: {e}")
+            else : 
+                url = f"https://www.google.com/search?q={prompt.lower()}"
+                webbrowser.open(url)
 
-    def isQuestion(tokens):
+    def isQuestion(self, tokens):  # Added self parameter
         return any(token.lower() in ["what", "when", "why", "where", "how"] for token in tokens)
 
 
@@ -82,4 +86,3 @@ if __name__ == "__main__":
     # Example usage
     user_prompt = input("What would you like to browse for? ")
     browser = TalkieChum(user_prompt)
-    

@@ -2,9 +2,8 @@ import nltk
 import random
 
 actions = {
-    "General Actions": ["play", "pause", "stop", "call", "send", "compose", "volume up", "volume down"],
-    "Task Management": ["set", "add", "create", "edit", "delete", "remind", "schedule", "snooze"],
-    "Information Retrieval": ["what", "when", "why", "where", "how"],  
+    "General Actions": ["play", "pause", "stop", "call", "send", "compose",],
+    "Task Management": ["set", "add", "create", "edit", "delete", "remind", "schedule", "snooze"],    
     "Confirmation": ["yes", "no", "maybe"],
     "Feedback": ["thanks", "cancel", "repeat"]
 }
