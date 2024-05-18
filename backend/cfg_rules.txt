@@ -1,0 +1,16 @@
+S -> PROGRAM_ACTIONS |
+PROGRAM_ACTIONS -> MODAL PRONOUNS VERB PROGRAM_NOUN | VERB PROGRAM_NOUN |         
+
+PROGRAM_NOUN -> DETERMINERS PROGRAM | DETERMINERS ADJECTIVE PROGRAM | ADJECTIVE PROGRAM | PROGRAM   
+PREP_PHRASE -> PREPOSITIONS PROGRAM_NOUN
+    
+PROGRAM -> "Microsoft" | "Dependency" | "Assassins's" | "Runtime" | "Visual" | "blender" | "Balanced" | "Pro" | "Flag" | "Master" | "PHP" | "RAKK" | "(64-bit)" | "PSP" | "Creed" | "Black" | "Installer" | "Manager" | "2022" | "starship" | "GPIO2" | "XAMPP" | "version" | "Software" | "Development" | "Kit" | "AMD" | "WebView2" | "CMake" | "Community" | "10.24.16" | "x86_64" | "Edge" | "Code" | "AMD_Chipset_Drivers" | "4:" | "19.0.1" | "Git" | "6.11" | "Java(TM)" | "Postman" | "Composer" | "SBxxx" | "uTorrent" | "SMBus" | "WinRAR" | "SE" | "-" | "Zoom" | "2" | "RAKK_FINETUNER_ALTI(RB)" | "Ryzen" | "Lam-Ang" | "V1.0" | "FineTuner" | "TeamViewer" | "Studio" | "(User)" | "Dota" | "Driver" | "Promontory_GPIO"
+
+MODAL -> "can"
+PRONOUNS -> "you"   
+        
+ADJECTIVE -> "Microsoft" | "Dependency" | "Assassins's" | "Runtime" | "Visual" | "blender" | "Balanced" | "Pro" | "Flag" | "Master" | "PHP" | "RAKK" | "(64-bit)" | "PSP" | "Creed" | "Black" | "Installer" | "Manager" | "2022" | "starship" | "GPIO2" | "XAMPP" | "version" | "Software" | "Development" | "Kit" | "AMD" | "WebView2" | "CMake" | "Community" | "10.24.16" | "x86_64" | "Edge" | "Code" | "AMD_Chipset_Drivers" | "4:" | "19.0.1" | "Git" | "6.11" | "Java(TM)" | "Postman" | "Composer" | "SBxxx" | "uTorrent" | "SMBus" | "WinRAR" | "SE" | "-" | "Zoom" | "2" | "RAKK_FINETUNER_ALTI(RB)" | "Ryzen" | "Lam-Ang" | "V1.0" | "FineTuner" | "TeamViewer" | "Studio" | "(User)" | "Dota" | "Driver" | "Promontory_GPIO"
+VERB  ->  "open" | "is" | "search" | "schedule" | "create" | "send" | "compose" 
+DETERMINERS -> "the"
+PREPOSITIONS -> "in"
+PUNCTUATIONS -> "?"

@@ -18,6 +18,7 @@ function createWindow() {
       enableRemoteModule: true, // Enable remote module
       webSecurity: false, // Disable web security
       contentSecurityPolicy: "default-src 'self'; connect-src *",
+    
     }
   })
 
@@ -29,6 +30,15 @@ function createWindow() {
     shell.openExternal(details.url)
     return { action: 'deny' }
   })
+
+  // mainWindow.webContents.session.webRequest.onHeadersReceived((details, callback) => {
+  //   callback({
+  //     responseHeaders: {
+  //       ...details.responseHeaders,
+  //       'Content-Security-Policy': ["default-src 'self' http://127.0.0.1:4000"]
+  //     }
+  //   });
+  // });
 
   // HMR for renderer base on electron-vite cli.
   // Load the remote URL for development or the local html file for production.

@@ -1,0 +1,38 @@
+[
+    {
+        "message": "what is computer",
+        "response": "Unfortunately, I do not understand your request, but the web says https://www.google.com/search?q=what is computer"
+    },
+    {
+        "message": "what is computersrsrsr",
+        "response": "Unfortunately, I do not understand your request, but the web says https://www.google.com/search?q=what%20is%20computer"
+    },
+    {
+        "message": "hello whats up",
+        "response": "I am sorry, I don't understand your task: hello whats up"
+    },
+    {
+        "message": "hello",
+        "response": "I am sorry, I don't understand your task: hello"
+    },
+    {
+        "message": "hello whats up",
+        "response": "I am sorry, I don't understand your task: hello whats up"
+    },
+    {
+        "message": "asdasd",
+        "response": "I am sorry, I don't understand your task: asdasd"
+    },
+    {
+        "message": "asdasdsa",
+        "response": "I am sorry, I don't understand your task: asdasdsa"
+    },
+    {
+        "message": "asdasdasd",
+        "response": "I am sorry, I don't understand your task: asdasdasd"
+    },
+    {
+        "message": "asdasda",
+        "response": "I am sorry, I don't understand your task: asdasda"
+    }
+]
