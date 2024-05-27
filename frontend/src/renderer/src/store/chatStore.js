@@ -27,7 +27,7 @@ const useMessageStore = create((set, get) => ({
                         index === sessionIndex
                             ? [ 
                                 ...session,
-                                {  // Use square brackets for dynamic property name
+                                {  
                                     message: message,
                                     response: response
                                 }
@@ -40,7 +40,7 @@ const useMessageStore = create((set, get) => ({
                     sessions: [
                         ...state.sessions, 
                         [ 
-                            {  // Use square brackets for dynamic property name
+                            {  
                                 message: message,
                                 response: response
                             }

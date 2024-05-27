@@ -54,5 +54,205 @@
     {
         "message": "asdasaad",
         "response": "I am sorry, I don't understand your task: asdasaad"
+    },
+    {
+        "message": "what is computer",
+        "response": "Unfortunately, I do not understand your request, but the web says https://www.google.com/search?q=what%20is%20computer"
+    },
+    {
+        "message": "what is computer",
+        "response": "Unfortunately, I do not understand your request, but the web says https://www.google.com/search?q=what%20is%20computer"
+    },
+    {
+        "message": "what is computer",
+        "response": "Unfortunately, I do not understand your request, but the web says https://www.google.com/search?q=what%20is%20computer"
+    },
+    {
+        "message": "asdasd",
+        "response": "Sorry, but I'm not sure I understand: 'asdasd'."
+    },
+    {
+        "message": "asdasdasdasda",
+        "response": "It seems I didn't understand your task: 'asdasdasdasda'."
+    },
+    {
+        "message": "asdsdadas",
+        "response": "I'm having trouble understanding your request: 'asdsdadas'."
+    },
+    {
+        "message": "open chrome",
+        "response": "I couldn't quite grasp what you were asking: 'open chrome'."
+    },
+    {
+        "message": "open microsoft",
+        "response": "I couldn't quite grasp what you were asking: 'open microsoft'."
+    },
+    {
+        "message": "open Microsoft",
+        "response": "I'm sorry, but I couldn't understand your request: 'open Microsoft'."
+    },
+    {
+        "message": "open Microsoft",
+        "response": "Apologies, but I couldn't comprehend your request: 'open Microsoft'."
+    },
+    {
+        "message": "open Microsoft",
+        "response": "I didn't get that: 'open Microsoft'."
+    },
+    {
+        "message": "open Microsoft",
+        "response": "I apologize, I didn't catch that: 'open Microsoft'."
+    },
+    {
+        "message": "open Microsoft",
+        "response": "I'm having trouble understanding your request: 'open Microsoft'."
+    },
+    {
+        "message": "open Microsoft",
+        "response": "Sorry, but I'm not sure I understand: 'open Microsoft'."
+    },
+    {
+        "message": "open Microsoft",
+        "response": "Unfortunately, I do not understand your request, but the web says https://www.google.com/search?q=open%20microsoft"
+    },
+    {
+        "message": "open Microsoft",
+        "response": "I couldn't quite grasp what you were asking: 'open Microsoft'."
+    },
+    {
+        "message": "open Microsoft",
+        "response": "I couldn't quite grasp what you were asking: 'open Microsoft'."
+    },
+    {
+        "message": "open Microsoft",
+        "response": "I couldn't quite grasp what you were asking: 'open Microsoft'."
+    },
+    {
+        "message": "open Microsoft",
+        "response": "I'm sorry, but I couldn't understand your request: 'open Microsoft'."
+    },
+    {
+        "message": "open Microsoft",
+        "response": "I'm having trouble understanding your request: 'open Microsoft'."
+    },
+    {
+        "message": "open Microsoft",
+        "response": "(S (PROGRAM_ACTIONS (VERB open) (PROGRAM_NOUN (PROGRAM microsoft))))"
+    },
+    {
+        "message": "open Microsoft",
+        "response": "(S (PROGRAM_ACTIONS (VERB open) (PROGRAM_NOUN (PROGRAM microsoft))))"
+    },
+    {
+        "message": "open Microsoft",
+        "response": "(S (PROGRAM_ACTIONS (VERB open) (PROGRAM_NOUN (PROGRAM microsoft))))"
+    },
+    {
+        "message": "open Microsoft",
+        "response": "(S (PROGRAM_ACTIONS (VERB open) (PROGRAM_NOUN (PROGRAM microsoft))))"
+    },
+    {
+        "message": "open Microsoft",
+        "response": "(S (PROGRAM_ACTIONS (VERB open) (PROGRAM_NOUN (PROGRAM microsoft))))"
+    },
+    {
+        "message": "open Microsoft",
+        "response": "(S (PROGRAM_ACTIONS (VERB open) (PROGRAM_NOUN (PROGRAM microsoft))))"
+    },
+    {
+        "message": "open Microsoft",
+        "response": "(S (PROGRAM_ACTIONS (VERB open) (PROGRAM_NOUN (PROGRAM microsoft))))"
+    },
+    {
+        "message": "open Microsoft",
+        "response": "(S (PROGRAM_ACTIONS (VERB open) (PROGRAM_NOUN (PROGRAM microsoft))))"
+    },
+    {
+        "message": "open Microsoft",
+        "response": "(S (PROGRAM_ACTIONS (VERB open) (PROGRAM_NOUN (PROGRAM microsoft))))"
+    },
+    {
+        "message": "open Microsoft",
+        "response": "(S (PROGRAM_ACTIONS (VERB open) (PROGRAM_NOUN (PROGRAM microsoft))))"
+    },
+    {
+        "message": "open zoom",
+        "response": "(S (PROGRAM_ACTIONS (VERB open) (PROGRAM_NOUN (PROGRAM zoom))))"
+    },
+    {
+        "message": "open zoom",
+        "response": "(S (PROGRAM_ACTIONS (VERB open) (PROGRAM_NOUN (PROGRAM zoom))))"
+    },
+    {
+        "message": "open zoom",
+        "response": "(S (PROGRAM_ACTIONS (VERB open) (PROGRAM_NOUN (PROGRAM zoom))))"
+    },
+    {
+        "message": "open zoom",
+        "response": "(S (PROGRAM_ACTIONS (VERB open) (PROGRAM_NOUN (PROGRAM zoom))))"
+    },
+    {
+        "message": "open zoom",
+        "response": "I'm sorry, but I couldn't understand your request: 'open zoom'."
+    },
+    {
+        "message": "open zoom",
+        "response": "I didn't get that: 'open zoom'."
+    },
+    {
+        "message": "open zoom",
+        "response": "Apologies, but I couldn't comprehend your request: 'open zoom'."
+    },
+    {
+        "message": "open zoom",
+        "response": "Sorry, but I'm not sure I understand: 'open zoom'."
+    },
+    {
+        "message": "open zoom",
+        "response": "(S (PROGRAM_ACTIONS (VERB open) (PROGRAM_NOUN (PROGRAM zoom))))"
+    },
+    {
+        "message": "open zoom",
+        "response": "(S (PROGRAM_ACTIONS (VERB open) (PROGRAM_NOUN (PROGRAM zoom))))"
+    },
+    {
+        "message": "open zoom",
+        "response": "(S (PROGRAM_ACTIONS (VERB open) (PROGRAM_NOUN (PROGRAM zoom))))"
+    },
+    {
+        "message": "open zoom",
+        "response": "(S (PROGRAM_ACTIONS (VERB open) (PROGRAM_NOUN (PROGRAM zoom))))"
+    },
+    {
+        "message": "open zoom",
+        "response": "(S (PROGRAM_ACTIONS (VERB open) (PROGRAM_NOUN (PROGRAM zoom))))"
+    },
+    {
+        "message": "open zoom",
+        "response": "(S (PROGRAM_ACTIONS (VERB open) (PROGRAM_NOUN (PROGRAM zoom))))"
+    },
+    {
+        "message": "open zoom",
+        "response": "(S (PROGRAM_ACTIONS (VERB open) (PROGRAM_NOUN (PROGRAM zoom))))"
+    },
+    {
+        "message": "open zoom",
+        "response": "Opening zoom..."
+    },
+    {
+        "message": "open zoom",
+        "response": "Opening zoom..."
+    },
+    {
+        "message": "open zoom",
+        "response": "Opening zoom..."
+    },
+    {
+        "message": "open chrome",
+        "response": "I apologize, I didn't catch that: 'open chrome'."
+    },
+    {
+        "message": "open chrome",
+        "response": "Sorry, I couldn't find that application on this computer."
     }
 ]

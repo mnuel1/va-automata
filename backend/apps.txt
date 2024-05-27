@@ -1,31 +1,30 @@
-Assassins's Creed 4: Black Flag || D:\Games\Assassins's Creed 4 - Black Flag\
-Visual Studio Community 2022 || D:\Program Files\Microsoft Visual Studio\2022\Community
-Microsoft Edge || C:\Program Files (x86)\Microsoft\Edge\Application
-Microsoft Edge WebView2 Runtime || C:\Program Files (x86)\Microsoft\EdgeWebView\Application
-RAKK_FINETUNER_ALTI(RB) || D:\Program Files (x86)\RAKK_FINETUNER_ALTI(RB)\
-RAKK Lam-Ang Pro FineTuner V1.0 version V1.0 || D:\Program Files(x86)\RAKK Lam-Ang Pro FineTuner V1.0\
-Composer - PHP Dependency Manager || C:\Program Files (x86)\ComposerSetup\
-AMD PSP Driver || C:\AMD\Chipset_Software\Binaries\PSP Driver\
-AMD Ryzen Balanced Driver || C:\AMD\Chipset_Software\Binaries\RyzenPPKG Driver\
-AMD SBxxx SMBus Driver || C:\AMD\Chipset_Software\Binaries\SMBUS Driver\
-Promontory_GPIO Driver || C:\AMD\Chipset_Software\Binaries\Promontory GPIO Driver\
-AMD_Chipset_Drivers || C:\Chipset_Software\
-AMD GPIO2 Driver || C:\AMD\Chipset_Software\Binaries\GPIO2 Driver\
-AMD Software || C:\Program Files\AMD\CIM\BIN64
-AMD Ryzen Master || D:\Program Files\AMD\ || D:\Program Files\AMD\bin\AMD Ryzen Master.exe
-Git || C:\Program Files\Git\ || C:\Program Files\Git\git-bash.exe
-Dota 2 || D:\Program Files(x86)\Steam\steamapps\common\dota 2 beta
-TeamViewer || C:\Program Files\TeamViewer || C:\Program Files\TeamViewer\TeamViewer.exe
-WinRAR 6.11 (64-bit) || C:\Program Files\WinRAR\
-XAMPP || C:\xampp || C:\xampp\xampp-control.exe
-AMD Ryzen Master || D:\Program Files\AMD\ || D:\Program Files\AMD\bin\AMD Ryzen Master.exe
-Microsoft Visual Studio Installer || "C:\Program Files (x86)\Microsoft Visual Studio\Installer"
-CMake || C:\Program Files\CMake\ || C:\Program Files\CMake\bin\cmake-gui.exe
-blender || D:\Program Files\Blender Foundation\Blender 4.0\ || D:\Program Files\Blender Foundation\Blender 4.0\blender-launcher.exe
-Java(TM) SE Development Kit 19.0.1 (64-bit) || C:\Program Files\Java\jdk-19\
-starship || C:\Program Files\starship\ || C:\Program Files\starship\bin\starship.exe
-Postman x86_64 10.24.16 || C:\Users\Manuel Marin\AppData\Local\Postman
-uTorrent || C:\Users\Manuel Marin\AppData\Roaming\uTorrent
-Zoom || C:\Users\Manuel Marin\AppData\Roaming\Zoom\bin || C:\Users\Manuel Marin\AppData\Roaming\Zoom\bin\Zoom.exe
-Microsoft Visual Studio Code (User) || D:\Program Files\Microsoft VS Code\
-Number of installed apps: 30
+assassins's creed 4: black flag || "nopath"
+visual studio community 2022 || "nopath"
+microsoft edge || "nopath"
+microsoft edge webview2 runtime || "nopath"
+rakk_finetuner_alti(rb) || "nopath"
+rakk lam-ang pro finetuner v1.0 version v1.0 || "nopath"
+composer - php dependency manager || "nopath"
+amd psp driver || "nopath"
+amd ryzen balanced driver || "nopath"
+amd sbxxx smbus driver || "nopath"
+promontory_gpio driver || "nopath"
+amd_chipset_drivers || "nopath"
+amd gpio2 driver || "nopath"
+amd software || "nopath"
+amd ryzen master || "d:\program files\amd\bin\amd ryzen master.exe"
+git || "c:\program files\git\git-bash.exe"
+dota 2 || "nopath"
+teamviewer || "c:\program files\teamviewer\teamviewer.exe"
+winrar 6.11 (64-bit) || "nopath"
+xampp || "c:\xampp\xampp-control.exe"
+amd ryzen master || "d:\program files\amd\bin\amd ryzen master.exe"
+microsoft visual studio installer || "nopath"
+cmake || "c:\program files\cmake\bin\cmake-gui.exe"
+blender || "d:\program files\blender foundation\blender 4.0\blender-launcher.exe"
+java(tm) se development kit 19.0.1 (64-bit) || "nopath"
+starship || "c:\program files\starship\bin\starship.exe"
+postman x86_64 10.24.16 || "nopath"
+µtorrent || "nopath"
+zoom || "c:\users\manuel marin\appdata\roaming\zoom\bin\zoom.exe"
+microsoft visual studio code (user) || "nopath"

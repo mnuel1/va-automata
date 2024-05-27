@@ -4,9 +4,15 @@ import json
 from requests.auth import HTTPBasicAuth
 import os.path
 import time
+from nltk import Tree
 from datetime import datetime
 import nltk
 import urllib.parse
+import webbrowser
+import random
+import os
+import asyncio
+import subprocess
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
@@ -14,6 +20,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.apps import meet_v2
 
 app = Flask(__name__)
+# CORS(app, origins='http://localhost:5173')
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/meetings.space.created']
@@ -23,6 +30,26 @@ client_id = 'boKvRRPiSiaMXXx4EBEALg'
 client_secret = 'nF9CJ8G23lk2VTpNE0yous1ZMVLtu5rs'
 redirect_uri = 'http://localhost:4000/redirect'
 
+
+i_dont_understand_wtf_u_saying = [
+    "I'm sorry, but I couldn't understand your request: '{prompt}'.",
+    "I apologize, I didn't catch that: '{prompt}'.",
+    "Hmm, I'm not sure what you mean by: '{prompt}'.",
+    "I couldn't quite grasp what you were asking: '{prompt}'.",
+    "Sorry, but I'm not sure I understand: '{prompt}'.",
+    "I'm having trouble understanding your request: '{prompt}'.",
+    "It seems I didn't understand your task: '{prompt}'.",
+    "I didn't get that: '{prompt}'.",
+    "I'm afraid I don't understand: '{prompt}'.",
+    "Apologies, but I couldn't comprehend your request: '{prompt}'."
+]
+
+def generate_response(prompt):
+    # Randomly select a template
+    response_template = random.choice(i_dont_understand_wtf_u_saying)
+    # Format the template with the provided prompt
+    response = response_template.format(prompt=prompt)
+    return response
 
 def getAccessToken(authorization_code):
     token_url = 'https://zoom.us/oauth/token'
@@ -59,6 +86,43 @@ def refreshAccessToken(refresh_token):
 
 def isQuestion(tokens):  # Added self parameter
     return any(token.lower() in ["what", "when", "why", "where", "how"] for token in tokens)
+
+def extract_verbs_and_programs(tree):
+    verb = None
+    program = None
+    
+    if isinstance(tree, nltk.Tree):
+        if tree.label() == "VERB":
+            verb = tree[0]
+        elif tree.label() == "PROGRAM":
+            program = tree[0]
+        else:
+            for subtree in tree:
+                sub_verb, sub_program = extract_verbs_and_programs(subtree)
+                if sub_verb:
+                    verb = sub_verb
+                if sub_program:
+                    program = sub_program
+    
+    return verb, program
+
+
+def read_apps_file(file_path):
+    programs = {}
+    with open(file_path, 'r') as file:
+        for line in file:
+            name = line.strip().split(' || ')[0]
+            path = line.strip().split(' || ')[1]
+            programs[name.lower()] = path            
+    return programs
+
+def search_program(programs, keyword):    
+    matches = [name for name in programs.keys() if keyword.lower() in name]
+    return matches
+
+async def run_program(program_path):
+     # Run the program asynchronously
+     subprocess.Popen(program_path, shell=True)
 
 
 @app.route('/')
@@ -243,7 +307,7 @@ def getChatSessions():
 
 
 @app.route('/prompt', methods=["POST"])
-def main():    
+async def main():    
     data = request.get_json()
 
     if not data or 'prompt' not in data:
@@ -258,22 +322,59 @@ def main():
     except FileNotFoundError:
         return jsonify({"error": "CFG rules file not found"}), 500
 
-    grammar = nltk.CFG.fromstring(cfg_rules)
+    grammar = nltk.CFG.fromstring(cfg_rules)    
     parser = nltk.ChartParser(grammar)
 
-    tokens = nltk.word_tokenize(prompt.lower())
-
-    if not isQuestion(tokens):
-        try:
-            trees = list(parser.parse(tokens))
+    tokens = nltk.word_tokenize(prompt.lower())    
+    if not isQuestion(tokens):        
+        try:            
+            trees = list(parser.parse(tokens))            
             if not trees:
-                response = f"I am sorry, I don't understand your task: {prompt}"
+                response = generate_response(prompt)
             else:
-                response = "\n".join([str(tree) for tree in trees])
+                cfg_values = "\n".join([str(tree) for tree in trees])
+                tree = Tree.fromstring(cfg_values)                
+                verb, program = extract_verbs_and_programs(tree)
+                if verb == 'open':
+                    programs_file_path = 'apps.txt'
+                    all_programs = read_apps_file(programs_file_path)
+                    matches = search_program(all_programs, program)
+                    if len(matches) == 1:
+                        program_path = all_programs[matches[0]]
+                        asyncio.create_task(run_program(program_path))
+                        response = f"Opening {matches[0]}..."
+                    elif len(matches) == 0:
+                        response = "Sorry, I couldn't find that application on this computer."
+                    else:
+                        response = f"Multiple matches found: {', '.join(matches)}"
+                    pass
+                elif verb == 'search':
+                    response = f"Let me look that up for you..."
+                    link = f"https://www.google.com/search?q={urllib.parse.quote(prompt.lower())}"
+                    webbrowser.open(link)
+                    pass
+                elif verb == 'schedule':
+                    # Perform task for 'schedule' verb
+                    pass
+                elif verb == 'create':
+                    # Perform task for 'create' verb
+                    pass
+                elif verb == 'send':
+                    # Perform task for 'send' verb
+                    pass
+                elif verb == 'compose':
+                    # Perform task for 'compose' verb
+                    pass
+                else:
+                    # Handle unknown verbs
+                    pass
         except ValueError as e:
-            response = f"I am sorry, I don't understand your task: {prompt}"
-    else:
+            print(e)
+            response = generate_response(prompt)
+    else:        
         response = f"Unfortunately, I do not understand your request, but the web says https://www.google.com/search?q={urllib.parse.quote(prompt.lower())}"
+        link = f"https://www.google.com/search?q={urllib.parse.quote(prompt.lower())}"
+        webbrowser.open(link)
 
     # Save the prompt and response in a session-specific file
     session_file_path = os.path.join('msgs', f'{sessionID}.json')
