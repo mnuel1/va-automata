@@ -1,14 +1,14 @@
 S -> PROGRAM_ACTIONS |
 PROGRAM_ACTIONS -> MODAL PRONOUNS VERB PROGRAM_NOUN | VERB PROGRAM_NOUN |         
 
-PROGRAM_NOUN -> DETERMINERS PROGRAM | DETERMINERS ADJECTIVE PROGRAM | ADJECTIVE PROGRAM | PROGRAM   
+PROGRAM_NOUN -> DETERMINERS PROGRAM | DETERMINERS ADJECTIVE PROGRAM | ADJECTIVE PROGRAM | PROGRAM | DETERMINERS PERSONAL_PROGRAM | DETERMINERS PERSONAL_ADJECTIVE PERSONAL_PROGRAM | PERSONAL_ADJECTIVE PERSONAL_PROGRAM | PERSONAL_PROGRAM   
 PREP_PHRASE -> PREPOSITIONS PROGRAM_NOUN
     
 PERSONAL_PROGRAM -> "assassins's" | "creed" | "4:" | "black" | "flag" | "visual" | "studio" | "community" | "2022" | "microsoft" | "edge" | "microsoft" | "edge" | "webview2" | "runtime" | "rakk_finetuner_alti(rb)" | "rakk" | "lam-ang" | "pro" | "finetuner" | "v1.0" | "version" | "v1.0" | "composer" | "-" | "php" | "dependency" | "manager" | "amd" | "psp" | "driver" | "amd" | "ryzen" | "balanced" | "driver" | "amd" | "sbxxx" | "smbus" | "driver" | "promontory_gpio" | "driver" | "amd_chipset_drivers" | "amd" | "gpio2" | "driver" | "amd" | "software" | "amd" | "ryzen" | "master" | "git" | "dota" | "2" | "teamviewer" | "winrar" | "6.11" | "(64-bit)" | "xampp" | "amd" | "ryzen" | "master" | "microsoft" | "visual" | "studio" | "installer" | "cmake" | "blender" | "java(tm)" | "se" | "development" | "kit" | "19.0.1" | "(64-bit)" | "starship" | "postman" | "x86_64" | "10.24.16" | "�torrent" | "zoom" | "microsoft" | "visual" | "studio" | "code" | "(user)" | 
 PERSONAL_ADJECTIVE -> "assassins's" | "creed" | "4:" | "black" | "flag" | "visual" | "studio" | "community" | "2022" | "microsoft" | "edge" | "microsoft" | "edge" | "webview2" | "runtime" | "rakk_finetuner_alti(rb)" | "rakk" | "lam-ang" | "pro" | "finetuner" | "v1.0" | "version" | "v1.0" | "composer" | "-" | "php" | "dependency" | "manager" | "amd" | "psp" | "driver" | "amd" | "ryzen" | "balanced" | "driver" | "amd" | "sbxxx" | "smbus" | "driver" | "promontory_gpio" | "driver" | "amd_chipset_drivers" | "amd" | "gpio2" | "driver" | "amd" | "software" | "amd" | "ryzen" | "master" | "git" | "dota" | "2" | "teamviewer" | "winrar" | "6.11" | "(64-bit)" | "xampp" | "amd" | "ryzen" | "master" | "microsoft" | "visual" | "studio" | "installer" | "cmake" | "blender" | "java(tm)" | "se" | "development" | "kit" | "19.0.1" | "(64-bit)" | "starship" | "postman" | "x86_64" | "10.24.16" | "�torrent" | "zoom" | "microsoft" | "visual" | "studio" | "code" | "(user)"
 
-PROGRAM -> 
-ADJECTIVE ->
+PROGRAM ->  "microsoft" | "word" | "google" | "chrome" | "adobe" | "photoshop" | "visual" | "studio" | "code" | "internet" | "explorer" | "mozilla" | "firefox" | "apple" | "safari" | "excel" | "powerpoint" | "illustrator" | "premiere" | "pro" | "autodesk" | "maya" | "blender" | "3d" | "sublime" | "text" | "atom" | "editor" | "android" | "eclipse" | "ide" | "unity" | "steam" | "client" | "spotify" | "desktop"
+ADJECTIVE ->  "microsoft" | "word" | "google" | "chrome" | "adobe" | "photoshop" | "visual" | "studio" | "code" | "internet" | "explorer" | "mozilla" | "firefox" | "apple" | "safari" | "excel" | "powerpoint" | "illustrator" | "premiere" | "pro" | "autodesk" | "maya" | "blender" | "3d" | "sublime" | "text" | "atom" | "editor" | "android" | "eclipse" | "ide" | "unity" | "steam" | "client" | "spotify" | "desktop"
 
 MODAL -> "can"
 PRONOUNS -> "you"   

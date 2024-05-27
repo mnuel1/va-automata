@@ -254,5 +254,9 @@
     {
         "message": "open chrome",
         "response": "Sorry, I couldn't find that application on this computer."
+    },
+    {
+        "message": "open photoshop",
+        "response": "Sorry, I couldn't find that application on this computer."
     }
 ]

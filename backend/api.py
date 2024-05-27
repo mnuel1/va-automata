@@ -344,7 +344,7 @@ async def main():
                         asyncio.create_task(run_program(program_path))
                         response = f"Opening {matches[0]}..."
                     elif len(matches) == 0:
-                        response = "Sorry, I couldn't find that application on this computer."
+                        response = "Sorry, I couldn't find the {program} on this computer."
                     else:
                         response = f"Multiple matches found: {', '.join(matches)}"
                     pass
