@@ -13,7 +13,12 @@ import random
 import os
 import asyncio
 import subprocess
+import base64
+import pickle
+from email.mime.text import MIMEText
 
+
+from googleapiclient.discovery import build
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -23,7 +28,7 @@ app = Flask(__name__)
 # CORS(app, origins='http://localhost:5173')
 
 # If modifying these scopes, delete the file token.json.
-SCOPES = ['https://www.googleapis.com/auth/meetings.space.created']
+SCOPES = ['https://www.googleapis.com/auth/meetings.space.created','https://www.googleapis.com/auth/gmail.readonly', 'https://www.googleapis.com/auth/gmail.send']
 app.secret_key = 'this is a secret'
 
 client_id = 'boKvRRPiSiaMXXx4EBEALg'
@@ -124,6 +129,108 @@ async def run_program(program_path):
      # Run the program asynchronously
      subprocess.Popen(program_path, shell=True)
 
+def authenticate_gmail():
+    creds = None
+    if os.path.exists('token.pickle'):
+        with open('token.pickle', 'rb') as token:
+            creds = pickle.load(token)
+    if not creds or not creds.valid:
+        if creds and creds.expired and creds.refresh_token:
+            creds.refresh(Request())
+        else:
+            flow = InstalledAppFlow.from_client_secrets_file(
+                'credentials.json', SCOPES)
+            creds = flow.run_local_server(port=0)
+        with open('token.pickle', 'wb') as token:
+            pickle.dump(creds, token)
+    return creds
+
+
+def send_email(service, to, subject, message_text):
+    message = MIMEText(message_text)
+    message['to'] = to
+    message['subject'] = subject
+    raw_message = base64.urlsafe_b64encode(message.as_bytes()).decode()
+    message = {'raw': raw_message}
+    try:
+        message = service.users().messages().send(userId="me", body=message).execute()
+        return message
+    except Exception as error:
+        return None
+
+def list_messages(service, query=''):
+    try:
+        response = service.users().messages().list(userId='me', q=query).execute()
+        messages = []
+        if 'messages' in response:
+            messages.extend(response['messages'])
+        messages_info = []
+        for message in messages:
+            msg = service.users().messages().get(userId='me', id=message['id']).execute()
+            messages_info.append({
+                'id': msg['id'],
+                'snippet': msg['snippet'],
+                'threadId': msg['threadId']
+            })
+        return messages_info
+    except Exception as error:
+        print(f'An error occurred: {error}')
+        return None
+
+
+    
+@app.route('/send_email', methods=['POST'])
+def api_send_email():
+    data = request.get_json()
+    to = data.get('to')
+    subject = data.get('subject')
+    message_text = data.get('message_text')
+    
+    if not to or not subject or not message_text:
+        return jsonify({"error": "Missing 'to', 'subject', or 'message_text'"}), 400
+    
+    creds = authenticate_gmail()
+    service = build('gmail', 'v1', credentials=creds)
+    
+    result = send_email(service, to, subject, message_text)
+    
+    if result:
+        return jsonify({"status": "Email sent", "message_id": result['id']}), 200
+    else:
+        return jsonify({"error": "Failed to send email"}), 500
+
+@app.route('/list_emails', methods=['GET'])
+def api_list_emails():
+    query_parts = []
+
+    if request.args.get('unread', 'false').lower() == 'true':
+        query_parts.append('is:unread')
+    if request.args.get('starred', 'false').lower() == 'true':
+        query_parts.append('is:starred')
+    if request.args.get('important', 'false').lower() == 'true':
+        query_parts.append('is:important')
+    if request.args.get('snooze', 'false').lower() == 'true':
+        query_parts.append('label:snoozed')
+    if request.args.get('sent', 'false').lower() == 'true':
+        query_parts.append('in:sent')
+    if request.args.get('drafts', 'false').lower() == 'true':
+        query_parts.append('in:drafts')
+    if request.args.get('spam', 'false').lower() == 'true':
+        query_parts.append('in:spam')
+    if request.args.get('bin', 'false').lower() == 'true':
+        query_parts.append('in:trash')
+
+    query = ' '.join(query_parts)
+    
+    creds = authenticate_gmail()
+    service = build('gmail', 'v1', credentials=creds)
+    
+    messages = list_messages(service, query)
+    
+    if messages is not None:
+        return jsonify({"messages": messages}), 200
+    else:
+        return jsonify({"error": "Failed to retrieve emails"}), 500
 
 @app.route('/')
 def redirect_to_zoom():    
