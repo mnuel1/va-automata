@@ -258,5 +258,17 @@
     {
         "message": "open photoshop",
         "response": "Sorry, I couldn't find that application on this computer."
+    },
+    {
+        "message": "what are the color of rainbow",
+        "response": "Unfortunately, I do not understand your request, but the web says https://www.google.com/search?q=what%20are%20the%20color%20of%20rainbow"
+    },
+    {
+        "message": "open zoom",
+        "response": "It seems I didn't understand your task: 'open zoom'."
+    },
+    {
+        "message": "Can you please open zoom",
+        "response": "It seems I didn't understand your task: 'Can you please open zoom'."
     }
 ]
