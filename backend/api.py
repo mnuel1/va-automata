@@ -90,26 +90,31 @@ def refreshAccessToken(refresh_token):
         return None
 
 def isQuestion(tokens):  # Added self parameter
-    return any(token.lower() in ["what", "when", "why", "where", "how"] for token in tokens)
+    return any(token.lower() in ["what", "when", "why", "where", "how",] for token in tokens)
 
-def extract_verbs_and_programs(tree):
+def extract_verbs_and_programs_and_email_nouns(tree):
     verb = None
     program = None
+    email_nouns = None
     
     if isinstance(tree, nltk.Tree):
         if tree.label() == "VERB":
             verb = tree[0]
         elif tree.label() == "PROGRAM":
             program = tree[0]
+        elif tree.label() == "EMAIL_NOUNS":
+            email_nouns = tree[0]
         else:
             for subtree in tree:
-                sub_verb, sub_program = extract_verbs_and_programs(subtree)
+                sub_verb, sub_program, sub_email_nouns = extract_verbs_and_programs_and_email_nouns(subtree)
                 if sub_verb:
                     verb = sub_verb
                 if sub_program:
                     program = sub_program
+                if sub_email_nouns:
+                    email_nouns = sub_email_nouns
     
-    return verb, program
+    return verb, program, email_nouns
 
 
 def read_apps_file(file_path):
@@ -158,19 +163,22 @@ def send_email(service, to, subject, message_text):
     except Exception as error:
         return None
 
-def list_messages(service, query=''):
+def list_messages(service, query='', max_results=7):
     try:
-        response = service.users().messages().list(userId='me', q=query).execute()
+        response = service.users().messages().list(userId='me', q=query, maxResults=max_results).execute()
         messages = []
         if 'messages' in response:
             messages.extend(response['messages'])
         messages_info = []
         for message in messages:
             msg = service.users().messages().get(userId='me', id=message['id']).execute()
+            headers = msg['payload']['headers']
+            sender = next(header['value'] for header in headers if header['name'] == 'From')
+            date = next(header['value'] for header in headers if header['name'] == 'Date')
             messages_info.append({
-                'id': msg['id'],
-                'snippet': msg['snippet'],
-                'threadId': msg['threadId']
+                'sender': sender,
+                'date': date,
+                'snippet': msg['snippet']
             })
         return messages_info
     except Exception as error:
@@ -414,7 +422,7 @@ def getChatSessions():
 
 
 @app.route('/prompt', methods=["POST"])
-async def main():    
+async def main():
     data = request.get_json()
 
     if not data or 'prompt' not in data:
@@ -422,26 +430,26 @@ async def main():
 
     prompt = data['prompt']
     sessionID = data['sessionID']
-
+    max_results = 7
     try:
         with open('cfg_rules.txt', 'r') as file:
             cfg_rules = file.read()
     except FileNotFoundError:
         return jsonify({"error": "CFG rules file not found"}), 500
 
-    grammar = nltk.CFG.fromstring(cfg_rules)    
+    grammar = nltk.CFG.fromstring(cfg_rules)
     parser = nltk.ChartParser(grammar)
 
-    tokens = nltk.word_tokenize(prompt.lower())    
-    if not isQuestion(tokens):        
-        try:            
-            trees = list(parser.parse(tokens))            
+    tokens = nltk.word_tokenize(prompt.lower())
+    if not isQuestion(tokens):
+        try:
+            trees = list(parser.parse(tokens))
             if not trees:
                 response = generate_response(prompt)
             else:
                 cfg_values = "\n".join([str(tree) for tree in trees])
-                tree = Tree.fromstring(cfg_values)                
-                verb, program = extract_verbs_and_programs(tree)
+                tree = Tree.fromstring(cfg_values)
+                verb, program, email_nouns= extract_verbs_and_programs_and_email_nouns(tree)
                 if verb == 'open':
                     programs_file_path = 'apps.txt'
                     all_programs = read_apps_file(programs_file_path)
@@ -466,19 +474,79 @@ async def main():
                 elif verb == 'create':
                     # Perform task for 'create' verb
                     pass
-                elif verb == 'send':
-                    # Perform task for 'send' verb
-                    pass
-                elif verb == 'compose':
-                    # Perform task for 'compose' verb
-                    pass
+                elif verb == 'send' and email_nouns == 'email':
+                    # Handle 'send email' action
+                    recipients = [subtree.leaves() for subtree in tree.subtrees(filter=lambda t: t.label() == 'GMAIL_FORMAT')]
+                    subject = [subtree.leaves() for subtree in tree.subtrees(filter=lambda t: t.label() == 'SUBJECT')]
+                    body = [subtree.leaves() for subtree in tree.subtrees(filter=lambda t: t.label() == 'BODY')]
+
+                    if recipients and subject and body:
+                        to = ''.join(recipients[0])
+                        subject_text = ' '.join(subject[0])
+                        message_text = ' '.join(body[0])
+                        print(f"{to} {subject_text} {message_text}")
+
+                        creds = authenticate_gmail()
+                        service = build('gmail', 'v1', credentials=creds)
+
+                        result = send_email(service, to, subject_text, message_text)
+
+                        if result:
+                            response = f"Email sent successfully to {to}"
+                        else:
+                            response = "Failed to send email"
+                    else:
+                        response = "Invalid email structure. Please provide recipients, subject, and body."
+
+                elif verb == 'read' and email_nouns == 'emails':
+                    # Handle 'read emails' action
+                    filters = [subtree.leaves() for subtree in tree.subtrees(filter=lambda t: t.label() == 'FILTER')]
+                    filter_queries = []
+                    for filter_list in filters:
+                        for filter_item in filter_list:
+                            if filter_item == 'unread':
+                                filter_queries.append('is:unread')
+                            elif filter_item == 'starred':
+                                filter_queries.append('is:starred')
+                            elif filter_item == 'important':
+                                filter_queries.append('is:important')
+                            elif filter_item == 'snoozed':
+                                filter_queries.append('label:snoozed')
+                            elif filter_item == 'sent':
+                                filter_queries.append('in:sent')
+                            elif filter_item == 'drafts':
+                                filter_queries.append('in:drafts')
+                            elif filter_item == 'spam':
+                                filter_queries.append('in:spam')
+                            elif filter_item == 'bin':
+                                filter_queries.append('in:trash')
+
+                    query = ' '.join(filter_queries)
+
+                    creds = authenticate_gmail()
+                    service = build('gmail', 'v1', credentials=creds)
+
+                    messages = list_messages(service, query, max_results)
+
+                    if messages:
+                        response = "Here are the filtered emails:\n\n"
+                        for message in messages:
+                            response += (
+                                f"From: {message['sender']}\n"
+                                f"Date: {message['date']}\n"
+                                f"Snippet: {message['snippet']}\n\n"
+                                f"-------------------------------------------------------------\n\n"
+                            )
+                    else:
+                        response = "No emails found with the specified filters."
+                
                 else:
                     # Handle unknown verbs
-                    pass
+                    response = generate_response(prompt)
         except ValueError as e:
             print(e)
             response = generate_response(prompt)
-    else:        
+    else:
         response = f"Unfortunately, I do not understand your request, but the web says https://www.google.com/search?q={urllib.parse.quote(prompt.lower())}"
         link = f"https://www.google.com/search?q={urllib.parse.quote(prompt.lower())}"
         webbrowser.open(link)
@@ -501,7 +569,7 @@ async def main():
     with open(session_file_path, 'w') as file:
         json.dump(session_data, file, indent=4)
 
-    return jsonify({"response": response}), 200       
+    return jsonify({"response": response}), 200      
         
 
 

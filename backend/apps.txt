@@ -25,6 +25,6 @@ blender || "d:\program files\blender foundation\blender 4.0\blender-launcher.exe
 java(tm) se development kit 19.0.1 (64-bit) || "nopath"
 starship || "c:\program files\starship\bin\starship.exe"
 postman x86_64 10.24.16 || "nopath"
-µtorrent || "nopath"
+ï¿½torrent || "nopath"
 zoom || "c:\users\manuel marin\appdata\roaming\zoom\bin\zoom.exe"
 microsoft visual studio code (user) || "nopath"
