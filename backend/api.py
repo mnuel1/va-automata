@@ -5,7 +5,7 @@ from requests.auth import HTTPBasicAuth
 import os.path
 import time
 from nltk import Tree
-from datetime import datetime
+from datetime import datetime, timezone
 import nltk
 import urllib.parse
 import webbrowser
@@ -34,8 +34,8 @@ app.secret_key = 'this is a secret'
 client_id = 'boKvRRPiSiaMXXx4EBEALg'
 client_secret = 'nF9CJ8G23lk2VTpNE0yous1ZMVLtu5rs'
 redirect_uri = 'http://localhost:4000/redirect'
-
-
+zaccess_token = 'eyJzdiI6IjAwMDAwMSIsImFsZyI6IkhTNTEyIiwidiI6IjIuMCIsImtpZCI6IjdlNDZiZTFkLWRlMmMtNGM4OS1hNzkwLTg0MDU4YmVjZGU0OCJ9.eyJ2ZXIiOjksImF1aWQiOiIwN2FjMjc3YzQxOGVmODYzYzA0YjU4ZThlZDAxZTY1NCIsImNvZGUiOiJ6RTE0eE5remNFQmRqNzhDRGZJVGp5RmREOWFaeE1ha2ciLCJpc3MiOiJ6bTpjaWQ6Ym9LdlJSUGlTaWFNWFh4NEVCRUFMZyIsImdubyI6MCwidHlwZSI6MCwidGlkIjowLCJhdWQiOiJodHRwczovL29hdXRoLnpvb20udXMiLCJ1aWQiOiJFNjU4VGJQc1MzcVZQSU5XTzFRelNnIiwibmJmIjoxNzE4MzIzNzc2LCJleHAiOjE3MTgzMjczNzYsImlhdCI6MTcxODMyMzc3NiwiYWlkIjoiRkpucmZsSHhSS0NiMklOaTZ1NjJTUSJ9.5FAUSErYafx3tvsgu9_z8enGnd6wrtJuV2WrHs-VQs4McRFHW9BXCg3BkSUVEgnjR-lfjsb94ANY6RiaqO_R5A'
+zrefresh_token = 'eyJzdiI6IjAwMDAwMSIsImFsZyI6IkhTNTEyIiwidiI6IjIuMCIsImtpZCI6IjkyMTQyZmM4LTgwZGMtNGJiMy04NjZjLTllZDcxZmM2N2RjYyJ9.eyJ2ZXIiOjksImF1aWQiOiIwN2FjMjc3YzQxOGVmODYzYzA0YjU4ZThlZDAxZTY1NCIsImNvZGUiOiJ2aEY1eUJ0c21FSm1tdDVMbkFEU2tlZmpKQWhEUmJreFEiLCJpc3MiOiJ6bTpjaWQ6Ym9LdlJSUGlTaWFNWFh4NEVCRUFMZyIsImdubyI6MCwidHlwZSI6MSwidGlkIjowLCJhdWQiOiJodHRwczovL29hdXRoLnpvb20udXMiLCJ1aWQiOiJFNjU4VGJQc1MzcVZQSU5XTzFRelNnIiwibmJmIjoxNzE4MzIyMTc3LCJleHAiOjE3MjYwOTgxNzcsImlhdCI6MTcxODMyMjE3NywiYWlkIjoiRkpucmZsSHhSS0NiMklOaTZ1NjJTUSJ9.I2lE3DwDVndum8t5YUSof9Vo5e2qnnFidFcxXqSfbA1dHP33lT7Mg-TxXzPJAFJDdI41EDybubQmnWh-iYQbeA'
 i_dont_understand_wtf_u_saying = [
     "I'm sorry, but I couldn't understand your request: '{prompt}'.",
     "I apologize, I didn't catch that: '{prompt}'.",
@@ -116,6 +116,24 @@ def extract_verbs_and_programs_and_email_nouns(tree):
     
     return verb, program, email_nouns
 
+def extract_sched_elements(tree):
+    verb = None
+    schedule_program = None
+    time_expr = None
+    time_ampm = None
+
+    for subtree in tree.subtrees():
+        if subtree.label() == 'VERB':
+            verb = ' '.join(subtree.leaves())
+        elif subtree.label() == 'SCHEDULE_PROGRAM':
+            schedule_program = ' '.join(subtree.leaves()) + ' meeting'
+        elif subtree.label() == 'TIME_EXPR':
+            time_expr = ' '.join(subtree.leaves())
+        elif subtree.label() == 'TIME_AMPM':
+            time_ampm = ' '.join(subtree.leaves())
+    
+    return verb, schedule_program, time_expr, time_ampm
+
 
 def read_apps_file(file_path):
     programs = {}
@@ -149,7 +167,6 @@ def authenticate_gmail():
         with open('token.pickle', 'wb') as token:
             pickle.dump(creds, token)
     return creds
-
 
 def send_email(service, to, subject, message_text):
     message = MIMEText(message_text)
@@ -185,8 +202,6 @@ def list_messages(service, query='', max_results=7):
         print(f'An error occurred: {error}')
         return None
 
-
-    
 @app.route('/send_email', methods=['POST'])
 def api_send_email():
     data = request.get_json()
@@ -240,14 +255,10 @@ def api_list_emails():
     else:
         return jsonify({"error": "Failed to retrieve emails"}), 500
 
-@app.route('/')
-def redirect_to_zoom():    
-    return "Hello, World"
-
-@app.route('/authorize')
-def authorizeZoom():
+# @app.route('/authorize')
+def authorizeZoom():    
     zoom_oauth_url = f"https://zoom.us/oauth/authorize?client_id={client_id}&response_type=code&redirect_uri={redirect_uri}"
-    return redirect(zoom_oauth_url)
+    webbrowser.open(zoom_oauth_url)
 
 @app.route('/redirect')
 def zoomRedirect():
@@ -260,7 +271,18 @@ def zoomRedirect():
         session['access_token'] = tokens['access_token']
         session['refresh_token'] = tokens['refresh_token']
         session['token_expires_at'] = time.time() + tokens['expires_in']  # Store the expiration time
-        return redirect(url_for('create_meeting'))
+    
+        def write_tokens_to_file(access_token, refresh_token, expires_in):
+            tokens = {
+                'access_token': access_token,
+                'refresh_token': refresh_token,
+                'expires_at': time.time() + expires_in
+            }
+            with open('tokens.txt', 'w') as f:
+                json.dump(tokens, f)
+
+        write_tokens_to_file(tokens['access_token'], tokens['refresh_token'], tokens['expires_in'])
+        return createZoomMeeting(0)
     else:
         return "Error: Failed to obtain access token."
 
@@ -316,10 +338,9 @@ def get_installed_apps():
 
     return jsonify({'installedApps': apps}),200
 
-@app.route('/create/meeting/gmeet')
+# @app.route('/create/meeting/gmeet')
 def createGoogleMeeting():
-    """Shows basic usage of the Google Meet API.
-    """
+   
     creds = None
     # The file token.json stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
@@ -346,66 +367,11 @@ def createGoogleMeeting():
     except Exception as error:        
         return jsonify({'error': error}),500
 
-@app.route('/create/meeting/zoom')
-def createZoomMeeting():
+# @app.route('/create/meeting/zoom', methods=["GET"])
+def createZoomMeeting(start):    
+    token = any
     # Check if the access token is available and still valid
-    if 'access_token' not in session or time.time() >= session.get('token_expires_at', 0):
-        if 'refresh_token' in session:
-            tokens = refreshAccessToken(session['refresh_token'])
-            if tokens:
-                session['access_token'] = tokens['access_token']
-                session['refresh_token'] = tokens['refresh_token']
-                session['token_expires_at'] = time.time() + tokens['expires_in']
-            else:
-                return redirect(url_for('authorize_zoom'))
-        else:
-            return redirect(url_for('authorize_zoom'))
-
-    access_token = session['access_token']
-
-    start_time = request.args.get('start_time')
-    if not start_time:
-        start_time = datetime.now(datetime.timezone.utc).isoformat()
-
-    # Zoom API endpoint for creating a meeting
-    url = "https://api.zoom.us/v2/users/me/meetings"
-    headers = {
-        'Authorization': f'Bearer {access_token}',
-        'Content-Type': 'application/json'
-    }
-
-    payload = {
-        "topic": "Meeting",
-        "type": 2,  # Scheduled meeting
-        "start_time": start_time,  # UTC time in ISO 8601 format
-        "duration": 120,  # duration in minutes
-        "timezone": "UTC",
-        "agenda": "Normal Meeting",
-        "settings": {
-            "host_video": True,
-            "participant_video": True,
-            "join_before_host": False,
-            "mute_upon_entry": True,
-            "watermark": False,
-            "use_pmi": False,
-            "approval_type": 1,  # Automatically approve
-            "registration_type": 1,
-            "audio": "voip",
-            "auto_recording": "none"
-        }
-    }
-
-    response = requests.post(url, headers=headers, data=json.dumps(payload))
-
-    if response.status_code == 201:
-        print("Meeting created successfully!")
-        print("Meeting details:", response.json())
-        return jsonify(response.json())
-    else:
-        print(f"Failed to create meeting. Status code: {response.status_code}")
-        print("Response:", response.json())
-        return "Error: Failed to create meeting."
-
+    
 @app.route('/chats')
 def getChatSessions():
     json_objects = []
@@ -441,9 +407,11 @@ async def main():
     parser = nltk.ChartParser(grammar)
 
     tokens = nltk.word_tokenize(prompt.lower())
-    if not isQuestion(tokens):
-        try:
+     
+    if not isQuestion(tokens):        
+        try:            
             trees = list(parser.parse(tokens))
+                
             if not trees:
                 response = generate_response(prompt)
             else:
@@ -459,7 +427,7 @@ async def main():
                         asyncio.create_task(run_program(program_path))
                         response = f"Opening {matches[0]}..."
                     elif len(matches) == 0:
-                        response = "Sorry, I couldn't find the {program} on this computer."
+                        response = f"Sorry, I couldn't find the {program} on this computer."
                     else:
                         response = f"Multiple matches found: {', '.join(matches)}"
                     pass
@@ -469,78 +437,144 @@ async def main():
                     webbrowser.open(link)
                     pass
                 elif verb == 'schedule':
-                    # Perform task for 'schedule' verb
-                    pass
-                elif verb == 'create':
-                    # Perform task for 'create' verb
-                    pass
-                elif verb == 'send' and email_nouns == 'email':
-                    # Handle 'send email' action
-                    recipients = [subtree.leaves() for subtree in tree.subtrees(filter=lambda t: t.label() == 'GMAIL_FORMAT')]
-                    subject = [subtree.leaves() for subtree in tree.subtrees(filter=lambda t: t.label() == 'SUBJECT')]
-                    body = [subtree.leaves() for subtree in tree.subtrees(filter=lambda t: t.label() == 'BODY')]
+                    verb, schedule_program, time_expr, time_ampm = extract_sched_elements(tree)
+                    time_str = f"{time_expr} {time_ampm}"
+                        
+                    current_date = datetime.now().date()
 
-                    if recipients and subject and body:
-                        to = ''.join(recipients[0])
-                        subject_text = ' '.join(subject[0])
-                        message_text = ' '.join(body[0])
-                        print(f"{to} {subject_text} {message_text}")
+                    datetime_str = f"{current_date} {time_str}"
+                    
+                    datetime_obj = datetime.strptime(datetime_str, "%Y-%m-%d %I %p")
+                    if schedule_program == 'zoom meeting' :
+                               
+                        # if 'access_token' not in session or time.time() >= session.get('token_expires_at', 0):        
+                        #     if 'refresh_token' in session:
+                        #         tokens = refreshAccessToken(session['refresh_token'])
+                        #         if tokens:
+                        #             session['access_token'] = tokens['access_token']                                                    
+                        #             session['refresh_token'] = tokens['refresh_token']
+                        #             session['token_expires_at'] = time.time() + tokens['expires_in']
+                        #         else:                
+                        #             authorizeZoom()
+                        #             return
+                        #     else:            
+                        #         authorizeZoom()
+                        #         return
+                        
+                        def read_tokens_from_file():
+                            try:
+                                with open('tokens.txt', 'r') as f:
+                                    tokens = json.load(f)                                    
+                                    current_time = time.time()
+                                    if tokens['expires_at'] > current_time:
+                                        return tokens
+                                    else:
+                                        return None
+                            except FileNotFoundError:
+                                return None
+                        tokens = read_tokens_from_file()
+                        if not tokens:
+                            return "Error: Tokens are expired or not found."
+                        
+                        access_token = tokens['access_token']
+                                           
+                        # Zoom API endpoint for creating a meeting
+                        url = "https://api.zoom.us/v2/users/me/meetings"
+                        headers = {
+                            'Authorization': f'Bearer {access_token}',
+                            'Content-Type': 'application/json'
+                        }
 
-                        creds = authenticate_gmail()
-                        service = build('gmail', 'v1', credentials=creds)
+                        start_time = datetime.now(timezone.utc).isoformat()
+                        if (datetime_obj) :
+                            start_time = datetime_obj.isoformat()
 
-                        result = send_email(service, to, subject_text, message_text)
+                        payload = {
+                            "topic": "Meeting",
+                            "type": 2,  # Scheduled meeting
+                            "start_time": start_time,  # UTC time in ISO 8601 format
+                            "duration": 120,  # duration in minutes
+                            "timezone": "UTC",
+                            "agenda": "Normal Meeting",
+                            "settings": {
+                                "host_video": True,
+                                "participant_video": True,
+                                "join_before_host": False,
+                                "mute_upon_entry": True,
+                                "watermark": False,
+                                "use_pmi": False,
+                                "approval_type": 1,  # Automatically approve
+                                "registration_type": 1,
+                                "audio": "voip",
+                                "auto_recording": "none"
+                            }
+                        }
 
-                        if result:
-                            response = f"Email sent successfully to {to}"
-                        else:
-                            response = "Failed to send email"
-                    else:
-                        response = "Invalid email structure. Please provide recipients, subject, and body."
-
-                elif verb == 'read' and email_nouns == 'emails':
-                    # Handle 'read emails' action
-                    filters = [subtree.leaves() for subtree in tree.subtrees(filter=lambda t: t.label() == 'FILTER')]
-                    filter_queries = []
-                    for filter_list in filters:
-                        for filter_item in filter_list:
-                            if filter_item == 'unread':
-                                filter_queries.append('is:unread')
-                            elif filter_item == 'starred':
-                                filter_queries.append('is:starred')
-                            elif filter_item == 'important':
-                                filter_queries.append('is:important')
-                            elif filter_item == 'snoozed':
-                                filter_queries.append('label:snoozed')
-                            elif filter_item == 'sent':
-                                filter_queries.append('in:sent')
-                            elif filter_item == 'drafts':
-                                filter_queries.append('in:drafts')
-                            elif filter_item == 'spam':
-                                filter_queries.append('in:spam')
-                            elif filter_item == 'bin':
-                                filter_queries.append('in:trash')
-
-                    query = ' '.join(filter_queries)
-
-                    creds = authenticate_gmail()
-                    service = build('gmail', 'v1', credentials=creds)
-
-                    messages = list_messages(service, query, max_results)
-
-                    if messages:
-                        response = "Here are the filtered emails:\n\n"
-                        for message in messages:
-                            response += (
-                                f"From: {message['sender']}\n"
-                                f"Date: {message['date']}\n"
-                                f"Snippet: {message['snippet']}\n\n"
-                                f"-------------------------------------------------------------\n\n"
+                        response = requests.post(url, headers=headers, data=json.dumps(payload))
+                        
+                        if response.status_code == 201:
+                            
+                            meeting_details = response.json()  # Assuming response.json() contains the entire meeting details JSON
+    
+                            print("Meeting details:", meeting_details)
+                            
+                            response = (
+                                f"Great news! The meeting is all set and ready to go.\n"
+                                f"We'll be discussing '{meeting_details['topic']}' starting at {meeting_details['start_time']}.\n"
+                                f"The meeting will last for {meeting_details['duration']} minutes.\n"
+                                f"You can join the meeting using this link: {meeting_details['join_url']}.\n"
+                                f"If prompted, the password to enter is '{meeting_details['password']}'."
                             )
-                    else:
-                        response = "No emails found with the specified filters."
-                
-                else:
+                            
+                        else:
+                            print(f"Failed to create meeting. Status code: {response.status_code}")
+                            print("Response:", response.json())
+                            response = f"Failed to create meeting" 
+                                                 
+                    elif schedule_program == 'gmeet meeting' :                        
+                        creds = None
+                        # The file token.json stores the user's access and refresh tokens, and is
+                        # created automatically when the authorization flow completes for the first
+                        # time.
+                        if os.path.exists('token.json'):
+                            creds = Credentials.from_authorized_user_file('token.json')
+                        # If there are no (valid) credentials available, let the user log in.
+                        if not creds or not creds.valid:
+                            if creds and creds.expired and creds.refresh_token:
+                                creds.refresh(Request())
+                            else:
+                                flow = InstalledAppFlow.from_client_secrets_file(
+                                    'credentials.json', SCOPES)
+                                creds = flow.run_local_server(port=0)
+                            # Save the credentials for the next run
+                            with open('token.json', 'w') as token:
+                                token.write(creds.to_json())
+
+                        try:
+                            client = meet_v2.SpacesServiceClient(credentials=creds)
+                            gmeetrequest = meet_v2.CreateSpaceRequest()
+                            gmeetResponse = client.create_space(request=gmeetrequest)
+                            
+                            response = (
+                                f"For our Google Meet, you can join using this link: {gmeetResponse.meeting_uri}.\n"
+                                f"Simply click the link to join the meeting."
+                            )
+
+                        except Exception as error:
+                            print(error)
+                            response = f"Failed to create meeting. We apologize for any inconvenience caused."
+                    else :
+                        response = f"I apologize, but the {schedule_program} is not currently supported."
+                                        
+                    pass                
+                elif verb == 'send':                    
+                    # Perform task for 'send' verb
+                    pass
+                elif verb == 'compose':
+                    # Perform task for 'compose' verb
+                    pass                                
+                    # Handle unknown verbs
+                else:                    
                     # Handle unknown verbs
                     response = generate_response(prompt)
         except ValueError as e:
@@ -560,7 +594,10 @@ async def main():
 
     if os.path.exists(session_file_path):
         with open(session_file_path, 'r') as file:
-            session_data = json.load(file)
+            try:
+                session_data = json.load(file)
+            except json.JSONDecodeError as e:
+                print(e)
     else:
         session_data = []
 
@@ -574,4 +611,4 @@ async def main():
 
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=4000)
+    app.run(host='127.0.0.1', port=4000,debug=1)

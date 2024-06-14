@@ -1,7 +1,9 @@
-S -> PROGRAM_ACTIONS | READ_EMAILS | SEND_EMAIL
-PROGRAM_ACTIONS -> MODAL PRONOUNS VERB PROGRAM_NOUN | VERB PROGRAM_NOUN 
+S -> PROGRAM_ACTIONS | SCHEDULE_ACTION | READ_EMAILS | SEND_EMAIL
 
-READ_EMAILS -> VERB EMAIL_NOUNS EMAIL_FILTERS
+SCHEDULE_ACTION -> REQUEST PRONOUNS VERB PRONOUNS ABOUT TIME | REQUEST VERB PRONOUNS ABOUT TIME | VERB PRONOUNS ABOUT TIME | PRONOUNS VERB PRONOUNS ABOUT TIME | VERB ABOUT TIME
+PROGRAM_ACTIONS -> MODAL PRONOUNS VERB PROGRAM_NOUN | VERB PROGRAM_NOUN |         
+
+EAD_EMAILS -> VERB EMAIL_NOUNS EMAIL_FILTERS
 EMAIL_FILTERS -> FILTER | FILTER EMAIL_FILTERS
 FILTER -> "unread" | "starred" | "important" | "snoozed" | "sent" | "drafts" | "spam" | "bin"
 
@@ -24,16 +26,21 @@ WORD -> "hello" | "meeting" | "update" | "request" | "reminder" | "this" | "is" 
 PROGRAM_NOUN -> DETERMINERS PROGRAM | DETERMINERS ADJECTIVE PROGRAM | ADJECTIVE PROGRAM | PROGRAM | DETERMINERS PERSONAL_PROGRAM | DETERMINERS PERSONAL_ADJECTIVE PERSONAL_PROGRAM | PERSONAL_ADJECTIVE PERSONAL_PROGRAM | PERSONAL_PROGRAM   
 PREP_PHRASE -> PREPOSITIONS PROGRAM_NOUN
     
-PERSONAL_PROGRAM -> "assassins's" | "creed" | "4:" | "black" | "flag" | "visual" | "studio" | "community" | "2022" | "microsoft" | "edge" | "microsoft" | "edge" | "webview2" | "runtime" | "rakk_finetuner_alti(rb)" | "rakk" | "lam-ang" | "pro" | "finetuner" | "v1.0" | "version" | "v1.0" | "composer" | "-" | "php" | "dependency" | "manager" | "amd" | "psp" | "driver" | "amd" | "ryzen" | "balanced" | "driver" | "amd" | "sbxxx" | "smbus" | "driver" | "promontory_gpio" | "driver" | "amd_chipset_drivers" | "amd" | "gpio2" | "driver" | "amd" | "software" | "amd" | "ryzen" | "master" | "git" | "dota" | "2" | "teamviewer" | "winrar" | "6.11" | "(64-bit)" | "xampp" | "amd" | "ryzen" | "master" | "microsoft" | "visual" | "studio" | "installer" | "cmake" | "blender" | "java(tm)" | "se" | "development" | "kit" | "19.0.1" | "(64-bit)" | "starship" | "postman" | "x86_64" | "10.24.16" | "�torrent" | "zoom" | "microsoft" | "visual" | "studio" | "code" | "(user)" | 
-PERSONAL_ADJECTIVE -> "assassins's" | "creed" | "4:" | "black" | "flag" | "visual" | "studio" | "community" | "2022" | "microsoft" | "edge" | "microsoft" | "edge" | "webview2" | "runtime" | "rakk_finetuner_alti(rb)" | "rakk" | "lam-ang" | "pro" | "finetuner" | "v1.0" | "version" | "v1.0" | "composer" | "-" | "php" | "dependency" | "manager" | "amd" | "psp" | "driver" | "amd" | "ryzen" | "balanced" | "driver" | "amd" | "sbxxx" | "smbus" | "driver" | "promontory_gpio" | "driver" | "amd_chipset_drivers" | "amd" | "gpio2" | "driver" | "amd" | "software" | "amd" | "ryzen" | "master" | "git" | "dota" | "2" | "teamviewer" | "winrar" | "6.11" | "(64-bit)" | "xampp" | "amd" | "ryzen" | "master" | "microsoft" | "visual" | "studio" | "installer" | "cmake" | "blender" | "java(tm)" | "se" | "development" | "kit" | "19.0.1" | "(64-bit)" | "starship" | "postman" | "x86_64" | "10.24.16" | "�torrent" | "zoom" | "microsoft" | "visual" | "studio" | "code" | "(user)"
-
-PROGRAM ->  "microsoft" | "word" | "google" | "chrome" | "adobe" | "photoshop" | "visual" | "studio" | "code" | "internet" | "explorer" | "mozilla" | "firefox" | "apple" | "safari" | "excel" | "powerpoint" | "illustrator" | "premiere" | "pro" | "autodesk" | "maya" | "blender" | "3d" | "sublime" | "text" | "atom" | "editor" | "android" | "eclipse" | "ide" | "unity" | "steam" | "client" | "spotify" | "desktop" | 
-ADJECTIVE ->  "microsoft" | "word" | "google" | "chrome" | "adobe" | "photoshop" | "visual" | "studio" | "code" | "internet" | "explorer" | "mozilla" | "firefox" | "apple" | "safari" | "excel" | "powerpoint" | "illustrator" | "premiere" | "pro" | "autodesk" | "maya" | "blender" | "3d" | "sublime" | "text" | "atom" | "editor" | "android" | "eclipse" | "ide" | "unity" | "steam" | "client" | "spotify" | "desktop"
-
+PROGRAM ->  "microsoft" | "word" | "google" | "chrome" | "adobe" | "photoshop" | "visual" | "studio" | "code" | "internet" | "explorer" | "mozilla" | "firefox" | "apple" | "safari" | "excel" | "powerpoint" | "illustrator" | "premiere" | "pro" | "autodesk" | "maya" | "blender" | "3d" | "sublime" | "text" | "atom" | "editor" | "android" | "eclipse" | "ide" | "unity" | "steam" | "client" | "spotify" | "desktop"  | "zoom" | "teamviewer"
+NOUN -> "meeting"MODAL -> "can"
 MODAL -> "can"
-PRONOUNS -> "you"   
+PRONOUNS -> "you" | "me" | "us" | "the team"  
         
-VERB -> "open" | "is" | "search" | "schedule" | "create" | "send" | "compose" | "look" | "browse" | "seek" | "explore" | "find" | "read"
-DETERMINERS -> "the"
+
+VERB -> "open" | "is" | "search" | "schedule" | "arrange" | "create" | "send" | "compose" | "look" | "browse" | "seek" | "explore" | "find" | "call"
+DETERMINERS -> "the" | "a" | "on" | "at"
 PREPOSITIONS -> "in" | "to"
 PUNCTUATIONS -> "?"
+
+
+ABOUT -> DETERMINERS SCHEDULE_PROGRAM NOUN | DETERMINERS NOUN DETERMINERS SCHEDULE_PROGRAM | DETERMINERS SCHEDULE_PROGRAM VERB | DETERMINERS VERB DETERMINERS SCHEDULE_PROGRAM | DETERMINERS SCHEDULE_PROGRAM | SCHEDULE_PROGRAM
+TIME ->  DETERMINERS TIME_EXPR TIME_AMPM
+REQUEST -> "can" | "could" | "please"
+SCHEDULE_PROGRAM -> "zoom" | "gmeet"
+TIME_EXPR -> "8" | "9" | "10" | "11" | "12" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10" | "11" | "12" | "1" | "2" | "3" | "4" | "5" | "6" | "7"
+TIME_AMPM -> "am" | "pm"
