@@ -567,13 +567,71 @@ async def main():
                         response = f"I apologize, but the {schedule_program} is not currently supported."
                                         
                     pass                
-                elif verb == 'send':                    
-                    # Perform task for 'send' verb
-                    pass
-                elif verb == 'compose':
-                    # Perform task for 'compose' verb
-                    pass                                
-                    # Handle unknown verbs
+                elif verb == 'send' and email_nouns == 'email':
+                    # Handle 'send email' action
+                    recipients = [subtree.leaves() for subtree in tree.subtrees(filter=lambda t: t.label() == 'GMAIL_FORMAT')]
+                    subject = [subtree.leaves() for subtree in tree.subtrees(filter=lambda t: t.label() == 'SUBJECT')]
+                    body = [subtree.leaves() for subtree in tree.subtrees(filter=lambda t: t.label() == 'BODY')]
+
+                    if recipients and subject and body:
+                        to = ''.join(recipients[0])
+                        subject_text = ' '.join(subject[0])
+                        message_text = ' '.join(body[0])
+                        print(f"{to} {subject_text} {message_text}")
+
+                        creds = authenticate_gmail()
+                        service = build('gmail', 'v1', credentials=creds)
+
+                        result = send_email(service, to, subject_text, message_text)
+
+                        if result:
+                            response = f"Email sent successfully to {to}"
+                        else:
+                            response = "Failed to send email"
+                    else:
+                        response = "Invalid email structure. Please provide recipients, subject, and body."
+
+                elif verb == 'read' and email_nouns == 'emails':
+                    # Handle 'read emails' action
+                    filters = [subtree.leaves() for subtree in tree.subtrees(filter=lambda t: t.label() == 'FILTER')]
+                    filter_queries = []
+                    for filter_list in filters:
+                        for filter_item in filter_list:
+                            if filter_item == 'unread':
+                                filter_queries.append('is:unread')
+                            elif filter_item == 'starred':
+                                filter_queries.append('is:starred')
+                            elif filter_item == 'important':
+                                filter_queries.append('is:important')
+                            elif filter_item == 'snoozed':
+                                filter_queries.append('label:snoozed')
+                            elif filter_item == 'sent':
+                                filter_queries.append('in:sent')
+                            elif filter_item == 'drafts':
+                                filter_queries.append('in:drafts')
+                            elif filter_item == 'spam':
+                                filter_queries.append('in:spam')
+                            elif filter_item == 'bin':
+                                filter_queries.append('in:trash')
+
+                    query = ' '.join(filter_queries)
+
+                    creds = authenticate_gmail()
+                    service = build('gmail', 'v1', credentials=creds)
+
+                    messages = list_messages(service, query, max_results)
+
+                    if messages:
+                        response = "Here are the filtered emails:\n\n"
+                        for message in messages:
+                            response += (
+                                f"From: {message['sender']}\n"
+                                f"Date: {message['date']}\n"
+                                f"Snippet: {message['snippet']}\n\n"
+                                f"-------------------------------------------------------------\n\n"
+                            )
+                    else:
+                        response = "No emails found with the specified filters."
                 else:                    
                     # Handle unknown verbs
                     response = generate_response(prompt)
