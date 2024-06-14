@@ -34,5 +34,165 @@
     {
         "message": "asdasda",
         "response": "I am sorry, I don't understand your task: asdasda"
+    },
+    {
+        "message": "open the word",
+        "response": "Sorry, I couldn't find the {program} on this computer."
+    },
+    {
+        "message": "send email to example@gmail.com",
+        "response": "I'm having trouble understanding your request: 'send email to example@gmail.com'."
+    },
+    {
+        "message": "send email to exampleatgmaildotcom",
+        "response": "Let me look that up for you..."
+    },
+    {
+        "message": "open zoom",
+        "response": "I apologize, I didn't catch that: 'open zoom'."
+    },
+    {
+        "message": "open zoom",
+        "response": "Apologies, but I couldn't comprehend your request: 'open zoom'."
+    },
+    {
+        "message": "open the zoom",
+        "response": "I apologize, I didn't catch that: 'open the zoom'."
+    },
+    {
+        "message": "open the zoom",
+        "response": "I apologize, I didn't catch that: 'open the zoom'."
+    },
+    {
+        "message": "open the zoom",
+        "response": "I'm sorry, but I couldn't understand your request: 'open the zoom'."
+    },
+    {
+        "message": "open the zoom",
+        "response": "I didn't get that: 'open the zoom'."
+    },
+    {
+        "message": "open the zoom",
+        "response": "I apologize, I didn't catch that: 'open the zoom'."
+    },
+    {
+        "message": "open the zoom",
+        "response": "Opening zoom..."
+    },
+    {
+        "message": "open the zoom",
+        "response": "Apologies, but I couldn't comprehend your request: 'open the zoom'."
+    },
+    {
+        "message": "open the zoom",
+        "response": "I'm sorry, but I couldn't understand your request: 'open the zoom'."
+    },
+    {
+        "message": "open the zoom",
+        "response": "Sorry, but I'm not sure I understand: 'open the zoom'."
+    },
+    {
+        "message": "open the zoom",
+        "response": "Opening zoom..."
+    },
+    {
+        "message": "open teamviewer",
+        "response": "Opening teamviewer..."
+    },
+    {
+        "message": "send email to abcatgmaildotcom subject you body me",
+        "response": "Apologies, but I couldn't comprehend your request: 'yyoyoyooy'."
+    },
+    {
+        "message": "send email to abc@gmail.com subject you body me",
+        "response": "I didn't get that: 'send email to abc@gmail.com subject you body me'."
+    },
+    {
+        "message": "send email to abc@gmail.com subject you body me",
+        "response": "I didn't get that: 'send email to abc@gmail.com subject you body me'."
+    },
+    {
+        "message": "send email to abc@gmail.com subject you body me",
+        "response": "I'm having trouble understanding your request: 'send email to abc@gmail.com subject you body me'."
+    },
+    {
+        "message": "send email to abc@gmail.com subject you body me",
+        "response": "I apologize, I didn't catch that: 'send email to abc@gmail.com subject you body me'."
+    },
+    {
+        "message": "send email to abc@gmail.com subject you body me",
+        "response": "Sorry, but I'm not sure I understand: 'send email to abc@gmail.com subject you body me'."
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A ZOOM MEETING AT 10 PM",
+        "response": "Apologies, but I couldn't comprehend your request: 'CAN YOU SCHEDULE ME A ZOOM MEETING AT 10 PM'."
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A ZOOM MEETING AT 10 PM",
+        "response": "Hmm, I'm not sure what you mean by: 'CAN YOU SCHEDULE ME A ZOOM MEETING AT 10 PM'."
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A ZOOM MEETING AT 10 PM",
+        "response": "I'm sorry, but I couldn't understand your request: 'CAN YOU SCHEDULE ME A ZOOM MEETING AT 10 PM'."
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A ZOOM MEETING AT 10 PM",
+        "response": "I'm sorry, but I couldn't understand your request: 'CAN YOU SCHEDULE ME A ZOOM MEETING AT 10 PM'."
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A ZOOM MEETING AT 10 PM",
+        "response": "Apologies, but I couldn't comprehend your request: 'CAN YOU SCHEDULE ME A ZOOM MEETING AT 10 PM'."
+    },
+    {
+        "message": "open microsoft",
+        "response": "Multiple matches found: microsoft edge, microsoft edge webview2 runtime, microsoft visual studio installer, microsoft visual studio code (user)"
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A ZOOM MEETING AT 10 PM",
+        "response": "I'm having trouble understanding your request: 'CAN YOU SCHEDULE ME A ZOOM MEETING AT 10 PM'."
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A ZOOM MEETING AT 10 PM",
+        "response": "I didn't get that: 'CAN YOU SCHEDULE ME A ZOOM MEETING AT 10 PM'."
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A ZOOM MEETING AT 10 PM",
+        "response": "Let me look that up for you..."
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A ZOOM MEETING AT 10 PM",
+        "response": "Scheduling you a meeting was a success"
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A gmeet MEETING AT 10 PM",
+        "response": "Scheduling you a meeting was a success"
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A gmeet MEETING AT 10 PM",
+        "response": "Scheduling you a meeting was a success"
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A zoom MEETING AT 10 PM",
+        "response": "I apologize, but the zoom meeting is not currently supported."
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A zoom MEETING AT 10 PM",
+        "response": "I apologize, but the zoom meeting is not currently supported."
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A zoom MEETING AT 10 PM",
+        "response": "I apologize, but the zoom meeting is not currently supported."
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A zoom MEETING AT 10 PM",
+        "response": "I apologize, but the zoom meeting is not currently supported."
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A zoom MEETING AT 10 PM",
+        "response": "Let me look that up for you..."
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A zoom MEETING AT 10 PM",
+        "response": "Let me look that up for you..."
     }
 ]

@@ -270,5 +270,117 @@
     {
         "message": "Can you please open zoom",
         "response": "It seems I didn't understand your task: 'Can you please open zoom'."
+    },
+    {
+        "message": "open zoom",
+        "response": "Sorry, but I'm not sure I understand: 'open zoom'."
+    },
+    {
+        "message": "open zoom",
+        "response": "I'm sorry, but I couldn't understand your request: 'open zoom'."
+    },
+    {
+        "message": "open the zoom",
+        "response": "Hmm, I'm not sure what you mean by: 'open the zoom'."
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A zoom MEETING AT 10 PM",
+        "response": "Let me look that up for you..."
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A zoom MEETING AT 10 PM",
+        "response": "Let me look that up for you..."
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A zoom MEETING AT 10 PM",
+        "response": "Let me look that up for you..."
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A zoom MEETING AT 10 PM",
+        "response": "Let me look that up for you..."
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A zoom MEETING AT 10 PM",
+        "response": "Let me look that up for you..."
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A zoom MEETING AT 10 PM",
+        "response": "Let me look that up for you..."
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A zoom MEETING AT 10 PM",
+        "response": "Let me look that up for you..."
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A zoom MEETING AT 10 PM",
+        "response": "Let me look that up for you..."
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A zoom MEETING AT 10 PM",
+        "response": "Let me look that up for you..."
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A zoom MEETING AT 10 PM",
+        "response": "Let me look that up for you..."
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A zoom MEETING AT 10 PM",
+        "response": "Let me look that up for you..."
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A zoom MEETING AT 10 PM",
+        "response": "Let me look that up for you..."
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A zoom MEETING AT 10 PM",
+        "response": "Let me look that up for you..."
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A zoom MEETING AT 10 PM",
+        "response": "Let me look that up for you..."
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A zoom MEETING AT 10 PM",
+        "response": "Let me look that up for you..."
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A zoom MEETING AT 10 PM",
+        "response": "Let me look that up for you..."
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A zoom MEETING AT 10 PM",
+        "response": "Let me look that up for you..."
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A zoom MEETING AT 10 PM",
+        "response": "Let me look that up for you..."
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A zoom MEETING AT 10 PM",
+        "response": "Let me look that up for you..."
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A zoom MEETING AT 10 PM",
+        "response": "Hmm, I'm not sure what you mean by: 'CAN YOU SCHEDULE ME A zoom MEETING AT 10 PM'."
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A zoom MEETING ",
+        "response": "I'm having trouble understanding your request: 'CAN YOU SCHEDULE ME A zoom MEETING '."
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A zoom MEETING AT 10 PM",
+        "response": "Great news! The meeting is all set and ready to go.\nWe'll be discussing 'Meeting' starting at 2024-06-14T22:00:00Z.\nThe meeting will last for 120 minutes.\nYou can join the meeting using this link: https://zoom.us/j/97702295435?pwd=sPsDKXpgZx6PgVbvq5y2mNDRj6tIuM.1.\nIf prompted, the password to enter is 'BPf2P2'."
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A zoom MEETING AT 10 PM",
+        "response": "Great news! The meeting is all set and ready to go.\nWe'll be discussing 'Meeting' starting at 2024-06-14T22:00:00Z.\nThe meeting will last for 120 minutes.\nYou can join the meeting using this link: https://zoom.us/j/99667258055?pwd=7JKsTFmDFybqenRFRNqSd7dWmRnxDS.1.\nIf prompted, the password to enter is '3uN7uW'."
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A gmeet MEETING AT 10 PM",
+        "response": "Failed to create meeting. We apologize for any inconvenience caused."
+    },
+    {
+        "message": "CAN YOU SCHEDULE ME A gmeet MEETING AT 10 PM",
+        "response": "For our Google Meet, you can join using this link: https://meet.google.com/yca-epyh-rec.\nSimply click the link to join the meeting."
     }
 ]
